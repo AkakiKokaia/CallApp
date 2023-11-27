@@ -13,5 +13,6 @@ namespace CallApp.Domain.Interfaces
     {
         IRefreshTokenRepository refreshTokenRepository { get; }
         IUserRepository userRepository { get; }
+        IUserRoleRepository userRoleRepository { get; }
     }
 }

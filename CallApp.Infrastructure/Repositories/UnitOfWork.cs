@@ -25,6 +25,7 @@ namespace CallApp.Infrastructure.Repositories
 
         public IRefreshTokenRepository refreshTokenRepository => _serviceProvider.GetService<IRefreshTokenRepository>();
         public IUserRepository userRepository => _serviceProvider.GetService<IUserRepository>();
+        public IUserRoleRepository userRoleRepository => _serviceProvider.GetService<IUserRoleRepository>();
 
         #endregion
     }
