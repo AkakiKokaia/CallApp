@@ -5,6 +5,8 @@ using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.ResponseCompression;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.OpenApi.Models;
 using System.Globalization;
 
@@ -34,13 +36,10 @@ public class Program
 
             IConfiguration configuration = builder.Configuration;
 
-            builder.Services.AddControllers(options =>
-            {
-            });
-            builder.Services.AddFluentValidation(fv =>
+            builder.Services.AddControllers()
+                            .AddFluentValidation(fv =>
             {
                 fv.RegisterValidatorsFromAssemblyContaining(typeof(Program));
-                fv.ValidatorOptions.LanguageManager.Culture = new CultureInfo("ka-GE");
                 fv.ValidatorOptions.LanguageManager.Enabled = true;
                 fv.LocalizationEnabled = true;
             });
@@ -115,32 +114,34 @@ public class Program
                 app.UseSwagger();
                 app.UseSwaggerUI();
             }
-
             var supportedCultures = new List<CultureInfo>
                 {
-                    new CultureInfo("ka-GE"),
+                    CultureInfo.InvariantCulture,
                     new CultureInfo("en-US"),
-                    //new CultureInfo("ru-RU"),
-                    //new CultureInfo("uk-UA")
+                    // Add other supported cultures as needed
                 };
+            //var supportedCultures = new List<CultureInfo>
+            //    {
+            //        new CultureInfo("ka-GE"),
+            //        new CultureInfo("en-US"),
+            //        //new CultureInfo("ru-RU"),
+            //        //new CultureInfo("uk-UA")
+            //    };
 
-            var options = new RequestLocalizationOptions
-            {
-                DefaultRequestCulture = new RequestCulture("ka-GE"),
-                SupportedCultures = supportedCultures,
-                SupportedUICultures = supportedCultures
-            };
+            //var options = new RequestLocalizationOptions
+            //{
+            //    DefaultRequestCulture = new RequestCulture("ka-GE"),
+            //    SupportedCultures = supportedCultures,
+            //    SupportedUICultures = supportedCultures
+            //};
 
             var serviceProvider = builder.Services.BuildServiceProvider();
 
             var context = serviceProvider.GetService<CallAppDBContext>();
 
-            if (context != null)
-            {
-                DBInitializer.InitializeDatabase(app.Services, context);
-            }
+            DBInitializer.InitializeDatabase(app.Services, context);
 
-            app.UseRequestLocalization(options);
+            //app.UseRequestLocalization(options);
 
             app.MapControllers();
 

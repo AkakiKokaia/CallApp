@@ -1,8 +1,10 @@
 ﻿using CallApp.Application.Services;
 using CallApp.Domain.Entities;
+using CallApp.Domain.Interfaces;
 using CallApp.Domain.Interfaces.Repositories.RefreshToken;
 using CallApp.Domain.Interfaces.Repositories.User;
 using CallApp.Domain.Interfaces.Services;
+using CallApp.Infrastructure.Repositories;
 using CallApp.Infrastructure.Repositories.User;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
@@ -24,6 +26,7 @@ namespace CallApp.Infrastructure
         public static void AddInfrastructureLayer(this IServiceCollection services, IConfiguration configuration)
         {
             #region Services
+            services.AddTransient<IUnitOfWork, UnitOfWork>();
             services.AddTransient<ITokenService, TokenService>();
             #endregion
 
@@ -37,14 +40,13 @@ namespace CallApp.Infrastructure
 
             services.AddOptions();
 
-            services.AddDbContext<CallAppDBContext>(
-                options =>
+            services.AddDbContext<CallAppDBContext>(options =>
+            {
+                options.UseSqlServer(configuration.GetConnectionString("DefaultConnection"), x =>
                 {
-                    options.UseSqlServer(configuration.GetConnectionString("CallAppDatabase"), x =>
-                    {
-                        x.CommandTimeout((int)TimeSpan.FromMinutes(3).TotalSeconds);
-                    }).LogTo(Console.WriteLine, LogLevel.Information);
-                }, ServiceLifetime.Transient);
+                    x.CommandTimeout((int)TimeSpan.FromMinutes(3).TotalSeconds);
+                }).LogTo(Console.WriteLine, LogLevel.Information);
+            }, ServiceLifetime.Transient);
         }
 
         public static void AddAuthenticationServices(this IServiceCollection services, IConfiguration configuration)
@@ -65,7 +67,7 @@ namespace CallApp.Infrastructure
                 options.Password.RequiredLength = 8;
             });
 
-            services.AddScoped<ITokenService, TokenService>();
+            //services.AddScoped<ITokenService, TokenService>();
             services.AddAuthentication(x =>
             {
                 x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;

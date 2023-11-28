@@ -22,9 +22,9 @@ namespace CallApp.Application.Services
         private readonly IUnitOfWork unitOfWork;
         private readonly IHttpContextAccessor httpContextAccessor;
 
-        public TokenService(SymmetricSecurityKey tokenKey, IConfiguration configuration, IUnitOfWork unitOfWork, IHttpContextAccessor httpContextAccessor)
+        public TokenService(IConfiguration configuration, IUnitOfWork unitOfWork, IHttpContextAccessor httpContextAccessor)
         {
-            this.tokenKey = tokenKey;
+            tokenKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["JwtSettings:SecretKey"]));
             this.configuration = configuration;
             this.unitOfWork = unitOfWork;
             this.httpContextAccessor = httpContextAccessor;

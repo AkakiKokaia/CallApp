@@ -14,9 +14,9 @@ namespace CallApp.Infrastructure
     {
         public static void InitializeDatabase(IServiceProvider serviceProvider, CallAppDBContext context)
         {
-            #region Migrations
 
-            using IServiceScope serviceScope = serviceProvider.GetService<IServiceScope>();
+            #region Migrations
+            using IServiceScope serviceScope = serviceProvider.CreateScope();
 
             try
             {
@@ -31,7 +31,11 @@ namespace CallApp.Infrastructure
             {
                 var logger = serviceScope.ServiceProvider.GetRequiredService<ILogger<CallAppDBContext>>();
 
-                logger.LogError(ex, "An error occurred while migrating or seeding the database");
+
+
+                logger.LogError(ex, "An error occurred while migrating or seeding the database.");
+
+
 
                 throw;
             }

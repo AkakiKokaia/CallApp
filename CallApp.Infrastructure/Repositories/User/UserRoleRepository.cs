@@ -14,11 +14,19 @@ namespace CallApp.Infrastructure.Repositories.User
     {
         private readonly RoleManager<RoleEntity> _roleManager;
         private readonly IConfiguration _configuration;
+        private readonly CallAppDBContext _dbContext;
 
         public UserRoleRepository(RoleManager<RoleEntity> roleManager, IConfiguration configuration, CallAppDBContext context) : base(context)
         {
             _roleManager = roleManager;
             _configuration = configuration;
+            _dbContext = context;
+        }
+
+        public async Task AddToRoleAsync(UserEntity user, int roleId)
+        {
+            await _dbContext.UserRoles.AddAsync(new UserRoleEntity() { UserId = user.Id, RoleId = roleId });
+            await _dbContext.SaveChangesAsync();
         }
     }
 }

@@ -9,5 +9,6 @@ namespace CallApp.Domain.Interfaces.Repositories.User
 {
     public interface IUserRoleRepository : IGenericRepository<UserRoleEntity>
     {
+        Task AddToRoleAsync(UserEntity user, int roleId);
     }
 }

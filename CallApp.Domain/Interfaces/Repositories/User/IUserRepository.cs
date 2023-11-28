@@ -9,5 +9,6 @@ namespace CallApp.Domain.Interfaces.Repositories.User
 {
     public interface IUserRepository : IGenericRepository<UserEntity>
     {
+        Task CreateUser(UserEntity user, string password);
     }
 }

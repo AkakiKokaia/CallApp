@@ -39,6 +39,19 @@ namespace CallApp.Infrastructure
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
+
+            //builder.Entity<UserRoleEntity>()
+            //    .HasKey(ur => new { ur.UserId, ur.RoleId });
+
+            builder.Entity<UserRoleEntity>()
+                .HasOne(ur => ur.User)
+                .WithMany(u => u.Roles)
+                .HasForeignKey(u => u.UserId);
+
+            builder.Entity<UserRoleEntity>()
+                .HasOne(u => u.Role)
+                .WithMany(r => r.Users)
+                .HasForeignKey(ur => ur.RoleId);
         }
 
         public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default(CancellationToken))
