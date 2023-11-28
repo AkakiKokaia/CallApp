@@ -14,7 +14,6 @@
     <PackageReference Include="MediatR" Version="12.2.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.0" />
     <PackageReference Include="Microsoft.Extensions.Configuration" Version="8.0.0" />
-    <PackageReference Include="Microsoft.Extensions.Localization" Version="8.0.0" />
   </ItemGroup>
 
   <ItemGroup>
@@ -24,66 +23,6 @@
   <ItemGroup>
     <Folder Include="DTOs\User\" />
     <Folder Include="Features\Account\Queries\" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Compile Update="Resources\ExceptionErrorMessages.en-US.Designer.cs">
-      <DependentUpon>ExceptionErrorMessages.en-US.resx</DependentUpon>
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-    </Compile>
-    <Compile Update="Resources\ExceptionErrorMessages.ka-GE.Designer.cs">
-      <DependentUpon>ExceptionErrorMessages.ka-GE.resx</DependentUpon>
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-    </Compile>
-    <Compile Update="Resources\ExceptionErrorMessages.Designer.cs">
-      <DependentUpon>ExceptionErrorMessages.resx</DependentUpon>
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-    </Compile>
-    <Compile Update="Resources\ValidationErrorMessages.en-US.Designer.cs">
-      <DependentUpon>ValidationErrorMessages.en-US.resx</DependentUpon>
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-    </Compile>
-    <Compile Update="Resources\ValidationErrorMessages.ka-GE.Designer.cs">
-      <DependentUpon>ValidationErrorMessages.ka-GE.resx</DependentUpon>
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-    </Compile>
-    <Compile Update="Resources\ValidationErrorMessages.Designer.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>ValidationErrorMessages.resx</DependentUpon>
-    </Compile>
-  </ItemGroup>
-
-  <ItemGroup>
-    <EmbeddedResource Update="Resources\ExceptionErrorMessages.en-US.resx">
-      <LastGenOutput>ExceptionErrorMessages.en-US.Designer.cs</LastGenOutput>
-      <Generator>ResXFileCodeGenerator</Generator>
-    </EmbeddedResource>
-    <EmbeddedResource Update="Resources\ExceptionErrorMessages.ka-GE.resx">
-      <LastGenOutput>ExceptionErrorMessages.ka-GE.Designer.cs</LastGenOutput>
-      <Generator>ResXFileCodeGenerator</Generator>
-    </EmbeddedResource>
-    <EmbeddedResource Update="Resources\ExceptionErrorMessages.resx">
-      <LastGenOutput>ExceptionErrorMessages.Designer.cs</LastGenOutput>
-      <Generator>ResXFileCodeGenerator</Generator>
-    </EmbeddedResource>
-    <EmbeddedResource Update="Resources\ValidationErrorMessages.en-US.resx">
-      <LastGenOutput>ValidationErrorMessages.en-US.Designer.cs</LastGenOutput>
-      <Generator>ResXFileCodeGenerator</Generator>
-    </EmbeddedResource>
-    <EmbeddedResource Update="Resources\ValidationErrorMessages.ka-GE.resx">
-      <LastGenOutput>ValidationErrorMessages.ka-GE.Designer.cs</LastGenOutput>
-      <Generator>ResXFileCodeGenerator</Generator>
-    </EmbeddedResource>
-    <EmbeddedResource Update="Resources\ValidationErrorMessages.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>ValidationErrorMessages.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
   </ItemGroup>
 
 </Project>

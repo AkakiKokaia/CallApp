@@ -1,13 +1,11 @@
 ﻿using AutoMapper;
 using CallApp.Application.Exceptions;
-using CallApp.Application.Resources;
 using CallApp.Application.Wrappers;
 using CallApp.Domain.Entities;
 using CallApp.Domain.Interfaces;
 using CallApp.Domain.Interfaces.Repositories.User;
 using FluentValidation;
 using MediatR;
-using Microsoft.Extensions.Localization;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,27 +23,15 @@ namespace CallApp.Application.Features.Account.Commands
         public string Password { get; set; }
     }
 
-    public class RegisterAsyncCommandValidator : CustomAbstractValidator<RegisterAsyncCommand>
-    {
-        public RegisterAsyncCommandValidator(IStringLocalizer<ValidationErrorMessages> localizer) 
-        {
-            RuleFor(v => v.Email)
-                .NotEmpty()
-                .WithMessage(x => localizer["EmailIncorrect"]);
-        }
-    }
-
     public class RegisterAsyncCommandHandler : IRequestHandler<RegisterAsyncCommand, Response<bool>>
     {
         private readonly IUnitOfWork _uow;
         private readonly IMapper _mapper;
-        private readonly IStringLocalizer<RegisterAsyncCommand> _localizer;
 
-        public RegisterAsyncCommandHandler(IUnitOfWork uow, IMapper mapper, IStringLocalizer<RegisterAsyncCommand> localizer)
+        public RegisterAsyncCommandHandler(IUnitOfWork uow, IMapper mapper)
         {
             _uow = uow;
             _mapper = mapper;
-            _localizer = localizer;
         }
 
         public async Task<Response<bool>> Handle(RegisterAsyncCommand request, CancellationToken cancellationToken)

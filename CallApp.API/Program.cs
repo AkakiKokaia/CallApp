@@ -114,12 +114,6 @@ public class Program
                 app.UseSwagger();
                 app.UseSwaggerUI();
             }
-            var supportedCultures = new List<CultureInfo>
-                {
-                    CultureInfo.InvariantCulture,
-                    new CultureInfo("en-US"),
-                    // Add other supported cultures as needed
-                };
             //var supportedCultures = new List<CultureInfo>
             //    {
             //        new CultureInfo("ka-GE"),
