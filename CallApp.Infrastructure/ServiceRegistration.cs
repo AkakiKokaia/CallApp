@@ -35,6 +35,7 @@ namespace CallApp.Infrastructure
             services.AddTransient<IRefreshTokenRepository, RefreshTokenRepository>();
             services.AddTransient<IUserRepository, UserRepository>();
             services.AddTransient<IUserRoleRepository, UserRoleRepository>();
+            services.AddTransient<IUserProfileRepository, UserProfileRepository>();
 
             #endregion
 

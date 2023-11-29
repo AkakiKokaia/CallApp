@@ -20,9 +20,4 @@
     <ProjectReference Include="..\CallApp.Domain\CallApp.Domain.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="DTOs\User\" />
-    <Folder Include="Features\Account\Queries\" />
-  </ItemGroup>
-
 </Project>

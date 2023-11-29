@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -26,6 +27,38 @@ namespace CallApp.Infrastructure.Repositories.User
             _userManager = userManager;
             _roleManager = roleManager;
             _uow = uow;
+        }
+
+        public async Task<UserEntity> ValidateUser(string email, string password)
+        {
+            var user = await _userManager.Users
+                .Include(x => x.Roles)
+                .ThenInclude(x => x.Role)
+                .Where(x => x.Email == email)
+                .FirstOrDefaultAsync();
+
+            if (user != null && await _userManager.CheckPasswordAsync(user, password) && await ValidateUserAvailability(user))
+            {
+                return user;
+            }
+            return null;
+        }
+
+        public async Task<bool> ValidateUserAvailability(UserEntity user, CancellationToken cancellationToken = default)
+        {
+            if(user.LockoutEnabled && user.LockoutEnd > DateTime.Now)
+            {
+                return false;
+            }
+            else if(user.LockoutEnabled && user.LockoutEnd <= DateTime.Now)
+            {
+                user.LockoutEnabled = false;
+                user.LockoutEnd = null;
+
+                await _uow.userRepository.SaveChangesAsync(cancellationToken);
+                return true;
+            }
+            return true;
         }
 
         public async Task CreateUser(UserEntity user, string password)
@@ -56,6 +89,13 @@ namespace CallApp.Infrastructure.Repositories.User
             }
 
             return await base.SaveChangesAsync(cancellationToken);
+        }
+
+        public override async Task<UserEntity> GetById(int Id)
+        {
+            return await context.Set<UserEntity>()
+                .Include(x => x.UserProfiles)
+                .FirstOrDefaultAsync(x => x.Id == Id);
         }
     }
 }

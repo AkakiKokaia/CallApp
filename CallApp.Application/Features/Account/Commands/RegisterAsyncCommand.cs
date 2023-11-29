@@ -36,13 +36,22 @@ namespace CallApp.Application.Features.Account.Commands
 
         public async Task<Response<bool>> Handle(RegisterAsyncCommand request, CancellationToken cancellationToken)
         {
-            var newUser = _mapper.Map<UserEntity>(request);
-            var user = await _uow.userRepository.GetAllWhereAsync(x => x.Email == newUser.Email.ToLower());
-            if (user.Any()) throw new ApiException("User Already Registered");
-            newUser.UserName = request.Email;
-            newUser.Email = request.Email.ToLower();
-            await _uow.userRepository.CreateUser(newUser, request.Password);
-            return new Response<bool>(true, "User succesfully registered");
+            try
+            {
+                var newUser = _mapper.Map<UserEntity>(request);
+                var userProfile = _mapper.Map<UserProfileEntity>(request);
+                var user = await _uow.userRepository.GetAllWhereAsync(x => x.Email == newUser.Email.ToLower());
+                if (user.Any()) throw new ApiException("User Already Registered");
+                newUser.UserName = request.Email;
+                newUser.Email = request.Email.ToLower();
+                await _uow.userRepository.CreateUser(newUser, request.Password);
+                await _uow.userProfileRepository.CreateUserProfile(userProfile, newUser.Id);
+                return new Response<bool>(true, "User succesfully registered");
+            }
+            catch (Exception ex)
+            {
+                throw new ApiException("Something went wrong");
+            }
         }
     }
 }

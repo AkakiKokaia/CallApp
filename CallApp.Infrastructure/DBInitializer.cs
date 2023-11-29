@@ -58,7 +58,6 @@ namespace CallApp.Infrastructure
 
                 role = new RoleEntity
                 {
-                    Id = 1,
                     Name = "User",
                     NormalizedName = "USER",
                     ConcurrencyStamp = null
@@ -66,7 +65,6 @@ namespace CallApp.Infrastructure
                 context.Add(role);
                 role = new RoleEntity
                 {
-                    Id = 2,
                     Name = "Administrator",
                     NormalizedName = "ADMINISTRATOR",
                     ConcurrencyStamp = null

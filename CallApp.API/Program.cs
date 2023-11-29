@@ -92,18 +92,6 @@ public class Program
 
             var origins = builder.Configuration.GetValue<string>("OriginsToAllow");
 
-            builder.Services.AddCors(options =>
-            {
-                options.AddPolicy("DefaultAuth",
-                    builder =>
-                    {
-                        builder
-                        .WithOrigins(origins.Split(";"))
-                        .AllowAnyHeader()
-                        .AllowAnyMethod()
-                        .AllowCredentials();
-                    });
-            });
         }
 
         var app = builder.Build();

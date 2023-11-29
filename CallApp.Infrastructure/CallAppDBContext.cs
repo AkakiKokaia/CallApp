@@ -52,6 +52,12 @@ namespace CallApp.Infrastructure
                 .HasOne(u => u.Role)
                 .WithMany(r => r.Users)
                 .HasForeignKey(ur => ur.RoleId);
+
+            builder.Entity<UserProfileEntity>()
+                .HasOne(u => u.User)
+                .WithOne()
+                .OnDelete(DeleteBehavior.Cascade);
+
         }
 
         public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default(CancellationToken))
